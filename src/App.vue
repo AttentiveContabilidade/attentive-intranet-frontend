@@ -26,7 +26,7 @@ export default {
 #app {
   min-height: 100vh;
   /* use o nome EXATO do arquivo (maiúsc/minúsc) */
-  background-image: url('@/assets/background.PNG');
+  background-image: url('@/assets/background.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
