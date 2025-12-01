@@ -39,7 +39,7 @@ export default {
         { title: "SIEG: gestão dos certificados digitais",          icon: "https://www.sieg.com/wp-content/uploads/2025/01/LOGO-BLUE.svg", to: { path: "https://auth.sieg.com/" } },
         { title: "Gimba: compra de materiais para o escritório",          icon: "https://imagens.gimba.com.br/Images/midia/portal/gimbaempresaslp/img/logo_gimba_empresas.png", to: { path: "https://gimbaempresas.com.br/" } },
         { title: "ControlID: controle e acesso digital",          icon: "https://idsecure.com.br/media/logos/logo_preto.svg", to: { path: "https://idsecure.com.br/auth/login" } },
-        { title: "CertVídeo: emissão de certificado digital via QualyCert",          icon: "", to: { path: "" } }, //Link invalido questionar o ADM
+        { title: "CertVídeo: emissão de certificado digital via QualyCert",          icon: "", to: { path: "" } }, //Link invalido questionar o ADM att
         { title: "Lucid: criação de fluxos de trabalho",          icon: "https://cdn-cashy-static-assets.lucidchart.com/marketing/images/LucidSoftwareLogo.svg", to: { path: "https://lucid.app/pt/users/login#/login?activate=lucidchart" } },
 
       ],

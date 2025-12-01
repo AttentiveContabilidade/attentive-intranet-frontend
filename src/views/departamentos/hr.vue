@@ -1,5 +1,5 @@
 <template>
-  <!-- Header global já vem fora -->
+  <!-- Header global já vem fora ATT -->
   <DepartamentoLayout
     title="HR"
     :leftItems="automacoes"
