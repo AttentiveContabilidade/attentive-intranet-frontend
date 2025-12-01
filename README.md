@@ -1,29 +1,43 @@
-# Attentive
+# Attentive Intranet – Frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+Frontend da Intranet da **Attentive Contabilidade**, utilizada pelos colaboradores para:
 
-## Recommended IDE Setup
+- Acessar comunicados e notificações internas  
+- Visualizar ferramentas e automações por departamento (Fiscal, Contábil, Pessoal, Administrativo, etc.)  
+- Interagir com a área de IA de apoio aos times  
+- Gerenciar perfil e visualizar informações de colaboradores
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Este repositório contém apenas o **frontend** (SPA em Vue 3 + Vite).  
+A API utilizada fica no projeto **attentive-intranet-api** (FastAPI).
 
-## Customize configuration
+---
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## Stack principal
 
-## Project Setup
+- [Vue 3](https://vuejs.org/)  
+- [Vite](https://vite.dev/)  
+- [Vue Router](https://router.vuejs.org/)  
+- [BootstrapVue 3](https://github.com/cdmoro/bootstrap-vue-3)  
+- [Axios](https://axios-http.com/)
 
-```sh
-npm install
-```
+---
 
-### Compile and Hot-Reload for Development
+## Pré-requisitos
 
-```sh
-npm run dev
-```
+- **Node.js** >= 18.x  
+- **npm** >= 9.x (ou `pnpm`/`yarn`, se preferir adaptar os comandos)
 
-### Compile and Minify for Production
+---
 
-```sh
-npm run build
-```
+## Variáveis de ambiente
+
+O frontend utiliza um arquivo `.env` na raiz do projeto.
+
+Exemplo mínimo:
+
+```bash
+# URL base da API (FastAPI)
+VITE_API_BASE="http://127.0.0.1:8000/api/v1"
+
+# Opcional: nome da aplicação exibido em alguns componentes
+VITE_APP_NAME="Attentive Intranet"
