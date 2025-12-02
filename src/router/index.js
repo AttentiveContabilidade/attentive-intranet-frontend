@@ -14,7 +14,8 @@ import Comunicados from '../views/comunicados.vue'
 import Perfil from '../views/perfil.vue'
 
 // Views Automações
-import Tax from '../views/automacao/tax.vue'
+// 👇 Agora a rota /automacoes/tax usa o arquivo Prevtax.vue
+import Tax from '../views/automacao/Prevtax.vue'
 import Accounting from '../views/automacao/accounting.vue'
 import Payroll from '../views/automacao/payroll.vue'
 import Administrative from '../views/automacao/administrative.vue'
@@ -120,7 +121,7 @@ const routes = [
   {
     path: '/automacoes/tax',
     name: 'Tax',
-    component: Tax,
+    component: Tax, // Prevtax.vue
     meta: { requiresAuth: true },
   },
   {
