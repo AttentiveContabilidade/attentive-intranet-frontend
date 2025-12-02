@@ -44,7 +44,9 @@
       </BFormGroup>
 
       <BAlert v-if="error" variant="danger" show class="mt-3">{{ error }}</BAlert>
-      <BAlert v-if="success" variant="success" show class="mt-3">Publicado com sucesso!</BAlert>
+      <BAlert v-if="success" variant="success" show class="mt-3">
+        Publicado com sucesso!
+      </BAlert>
 
       <div class="d-flex justify-content-end gap-2 mt-4">
         <BButton variant="secondary" @click="fechar" :disabled="loading">Cancelar</BButton>
@@ -70,13 +72,13 @@ import {
   BFormGroup,
   BButton,
   BAlert,
-  BFormSelect          // 👈 novo import
+  BFormSelect
 } from 'bootstrap-vue-3'
 import { QuillEditor } from '@vueup/vue-quill'
 import { api } from '@/services/api'
 
 // ---- eventos ----
-const emit = defineEmits(['publicado']) // mantém compat com a tela (Comunicados.vue)
+const emit = defineEmits(['publicado'])
 
 // ---- controle do modal (exposto ao pai) ----
 const show = ref(false)
@@ -93,10 +95,10 @@ const tiposComunicado = [
 
 // ---- estado do form ----
 const form = ref({
-  tipo: 'general',  // 👈 default
+  tipo: 'general',
   titulo: '',
   subtitulo: '',
-  conteudo: '', // HTML do Quill
+  conteudo: '',
   fotoUrl: ''
 })
 
@@ -112,7 +114,7 @@ const toolbar = [
   ['link', 'blockquote', 'code-block', 'clean']
 ]
 
-// Util: remover HTML para gerar um resumo/texto plano (usado só para validação)
+// Remove HTML e deixa texto plano
 function stripHtml (html) {
   const tmp = document.createElement('div')
   tmp.innerHTML = html || ''
@@ -137,12 +139,11 @@ function fechar () {
   show.value = false
 }
 
-// ---- publicar no backend ----
+// ---- publicar ----
 async function publicar () {
   error.value = ''
   success.value = false
 
-  // validação mínima
   if (!form.value.titulo.trim()) {
     error.value = 'Informe o título.'
     return
@@ -152,12 +153,10 @@ async function publicar () {
     return
   }
 
-  // Montar payload para API /comunicados
-  // Campos esperados pelo backend: tipo, titulo, conteudo_html, imagem, visibilidade, tags, status, autor_id?, target_user_id?
   const payload = {
-    tipo: form.value.tipo,                             // 👈 agora vem do select
+    tipo: form.value.tipo,
     titulo: form.value.titulo.trim(),
-    conteudo_html: form.value.conteudo,                // se seu backend usa conteudo_html
+    conteudo_html: form.value.conteudo,
     imagem: form.value.fotoUrl?.trim() || null,
     visibilidade: 'public',
     tags: form.value.subtitulo ? [form.value.subtitulo.trim()] : [],
@@ -169,13 +168,12 @@ async function publicar () {
 
     const { data: saved } = await api.post('/api/v1/comunicados', payload)
 
-    // Emite no formato esperado pela lista
     emit('publicado', {
       id: saved?._id || saved?.id,
       tipo: form.value.tipo,
       titulo: form.value.titulo,
       subtitulo: form.value.subtitulo,
-      conteudo: form.value.conteudo, // HTML rico
+      conteudo: form.value.conteudo,
       fotoUrl: form.value.fotoUrl
     })
 
@@ -195,6 +193,6 @@ async function publicar () {
 
 <style scoped>
 .modal-offset {
-  margin-top: 12vh !important; /* empurra o modal para baixo para não colidir com navbar/header fixos */
+  margin-top: 10vh !important; /* só empurra pra baixo */
 }
 </style>

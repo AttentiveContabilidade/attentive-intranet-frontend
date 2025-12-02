@@ -224,7 +224,6 @@ export default {
       window.removeEventListener('scroll', forceClose)
     })
 
-    // utils globais para fechar com Esc
     function onKeydown(e) {
       if (e.key === 'Escape') forceClose()
     }
@@ -242,7 +241,6 @@ export default {
       closeTimer: null,
       navHeight: 64,
       profileRect: { top: 0, left: 0, width: 0, height: 0 },
-      // estados de hover
       hoveringNav: false,
       hoveringOverlay: false,
       menus: [
@@ -334,9 +332,9 @@ export default {
                { label: 'Avisos de Destaque', route: '/comunicados' },
                { label: 'Murais de Recados', route: '/comunicados' },
                { label: 'Congratulações', route: '/comunicados' },
-               { label: 'Boas-Vindas e Até Breve', route: '/comunicados' },            
+               { label: 'Boas-Vindas e Até Breve', route: '/comunicados' },
               ]
-           },            
+           },
           ],
         },
       ],
@@ -361,15 +359,13 @@ export default {
       if (el) this.navHeight = el.getBoundingClientRect().height || this.navHeight
     })
     window.addEventListener('click', this.handleClickOutside)
-    // listener para fechar vindo do setup()
     window.addEventListener('nu-header-force-close', this.forceClose)
   },
   beforeUnmount() {
     window.removeEventListener('click', this.handleClickOutside)
-    window.removeEventListener('nu-header-force-close', this.forceClose)
+    window.removeEventListener('nu-header-force_close', this.forceClose)
   },
   methods: {
-    /** ---------- HOVER ROBUSTO (nav + overlay) ---------- */
     onNavEnter(idx) {
       this.hoveringNav = true
       this.cancelClose()
@@ -390,8 +386,6 @@ export default {
       this.hoveringOverlay = false
       this.scheduleClose()
     },
-
-    /** ---------- PERFIL ---------- */
     toggleProfile(e) {
       e?.stopPropagation()
       const el = this.$refs.profileRef
@@ -399,7 +393,6 @@ export default {
         const r = (el.$el || el).getBoundingClientRect()
         this.profileRect = { top: r.top, left: r.left, width: r.width, height: r.height }
       }
-      // abrir perfil sempre fecha mega
       if (this.openIndex !== 'profile') {
         this.openIndex = 'profile'
       } else {
@@ -408,12 +401,9 @@ export default {
       if (this.openIndex) document.body.classList.add('nu-mega-open')
       else document.body.classList.remove('nu-mega-open')
     },
-
-    /** ---------- FECHAMENTO / TIMERS ---------- */
     scheduleClose(delay = 140) {
       this.cancelClose()
       this.closeTimer = setTimeout(() => {
-        // só fecha se o mouse não estiver nem no nav nem no overlay
         if (!this.hoveringNav && !this.hoveringOverlay) {
           this.forceClose()
         }
@@ -435,8 +425,6 @@ export default {
       this.cancelClose()
       document.body.classList.remove('nu-mega-open')
     },
-
-    /** ---------- NAVEGAÇÃO / AUTH ---------- */
     goTo(route) { this.$router.push(route) },
     logout: async function () {
       try {
@@ -457,7 +445,8 @@ export default {
   background: linear-gradient(90deg, #1a1f46 0%, #18293a 100%);
   color: #fff;
   min-height: 64px;
-  z-index: 1100;
+  /* z-index menor que modal/backdrop do Bootstrap (1050/1055) */
+  z-index: 1030;
 }
 .nav-btn {
   background: transparent;
@@ -492,12 +481,27 @@ export default {
 </style>
 
 <style>
-.mega-overlay { position: fixed; left: 0; right: 0; width: 100%; z-index: 1050; background: transparent; }
+/* mega-overlay acima do header mas abaixo do modal/backdrop */
+.mega-overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1040;
+  background: transparent;
+}
 .mega-content {
-  margin: 0 auto; width: clamp(1000px, 92vw, 1280px);
-  padding: 56px clamp(40px, 4vw, 80px); min-height: 340px; background: #fff;
-  border-radius: 16px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
-  display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 100px; animation: megaIn 0.18s ease;
+  margin: 0 auto;
+  width: clamp(1000px, 92vw, 1280px);
+  padding: 56px clamp(40px, 4vw, 80px);
+  min-height: 340px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 100px;
+  animation: megaIn 0.18s ease;
 }
 .mega-left { display: flex; flex-direction: column; gap: 24px; }
 .mega-image { width: 100%; height: 450px; object-fit: cover; border-radius: 12px; }
@@ -511,7 +515,16 @@ export default {
 .mega-list a { color: #333; text-decoration: none; transition: color 0.2s; }
 .mega-list a:hover { color: #4b3fff; }
 body.nu-mega-open { overflow-x: hidden !important; }
-@keyframes megaIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes megaIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 @media (max-width: 1100px) { .mega-content { grid-template-columns: 1.5fr 1fr; } }
-@media (max-width: 900px)  { .mega-content { grid-template-columns: 1fr; width: 94vw; min-width: 0; } }
+@media (max-width: 900px)  {
+  .mega-content {
+    grid-template-columns: 1fr;
+    width: 94vw;
+    min-width: 0;
+  }
+}
 </style>
